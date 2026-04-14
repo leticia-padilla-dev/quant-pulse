@@ -71,7 +71,7 @@ try {
   // Remove $schema reference to avoid meta-schema fetch requirements
   const schemaForCompilation = { ...schema };
   delete schemaForCompilation.$schema;
-  
+
   validate = ajv.compile(schemaForCompilation);
   console.log(`✓ Compiled JSON Schema validator`);
 } catch (err) {
