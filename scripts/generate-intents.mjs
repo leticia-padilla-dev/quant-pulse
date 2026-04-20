@@ -115,15 +115,19 @@ async function main() {
         continue;
       }
 
-      // Construct intent
+      // Construct intent matching canonical schema
       const intent = {
+        schema_version: "1.0",
+        intent_id: `ri:${candidate.id}:${template.route || "research_hypothesis"}`,
         candidate_id: candidate.id,
+        edition_id: new Date().toISOString().slice(0, 10) + "_v" + (candidate.score > 70 ? "1" : "2"), // Simplified edition logic
         hypothesis_type: Array.isArray(template.hypothesis_type) ? template.hypothesis_type[0] : template.hypothesis_type,
-        bias_direction: Array.isArray(template.bias_direction) ? template.bias_direction[0] : template.bias_direction,
+        bias: Array.isArray(template.bias) ? template.bias[0] : template.bias,
         affected_universe: template.affected_universe || ["UNKNOWN"],
-        time_horizon: template.time_horizon || "unknown",
+        horizon: template.horizon || "unknown",
+        signal_summary: candidate.summary || candidate.title,
         validation_goal: template.validation_goal || "Check signal impact",
-        invalidation_signal: template.invalidation_signal || "Price action contradicts signal",
+        invalidation_condition: template.invalidation_condition || "Price action contradicts signal",
         route: template.route || "research_hypothesis",
         score: candidate.score,
         confidence: candidate.confidence,

@@ -61,8 +61,10 @@ describe("Intent Emission CLI Integration", () => {
     expect(fs.existsSync(expectedIntentPath)).toBe(true);
 
     const intent = JSON.parse(fs.readFileSync(expectedIntentPath, "utf8"));
-    expect(intent.candidate_id).toBe("test_intent_gen");
+    expect(intent.intent_id).toContain("test_intent_gen");
     expect(intent.hypothesis_type).toBe("event_driven");
+    expect(intent.bias).toBe("bullish");
+    expect(intent.route).toBe("research_hypothesis");
   });
 
   it("should skip candidates that are not in ready_for_review state", () => {

@@ -1,26 +1,36 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://quantpulse.local/schema/research-intent.json",
+  "$id": "https://whiteks1.github.io/quant-pulse/schemas/research-intent.schema.json",
   "title": "Quant Pulse Research Intent",
   "description": "Structured research hypothesis or risk filter emitted to QuantLab based on validated signal candidates.",
   "type": "object",
   "required": [
-    "candidate_id",
+    "intent_id",
     "hypothesis_type",
-    "bias_direction",
+    "bias",
     "affected_universe",
-    "time_horizon",
+    "horizon",
     "validation_goal",
-    "invalidation_signal",
+    "invalidation_condition",
     "route",
-    "score",
-    "confidence",
     "timestamp"
   ],
   "properties": {
+    "intent_id": {
+      "type": "string",
+      "description": "Unique intent identifier (ri:<id>:<route>)"
+    },
     "candidate_id": {
       "type": "string",
-      "description": "ID of the source candidate in automation/candidates/"
+      "description": "Original candidate identifier for internal traceability"
+    },
+    "edition_id": {
+      "type": "string",
+      "description": "Edition ID in format YYYY-MM-DD_vN"
+    },
+    "schema_version": {
+      "type": "string",
+      "const": "1.0"
     },
     "hypothesis_type": {
       "type": "string",
@@ -34,7 +44,7 @@
         "product_priority"
       ]
     },
-    "bias_direction": {
+    "bias": {
       "type": "string",
       "enum": [
         "bullish",
@@ -47,20 +57,21 @@
       "type": "array",
       "items": {
         "type": "string"
-      },
-      "description": "List of assets, sectors, or venues affected (e.g. ['BTC', 'ETH', 'EXCHANGES'])"
+      }
     },
-    "time_horizon": {
+    "horizon": {
       "type": "string",
-      "description": "Expected duration of the hypothesis (e.g. 'hours', 'days_to_weeks')"
+      "description": "Expected duration (e.g. 'days to weeks')"
+    },
+    "signal_summary": {
+      "type": "string",
+      "description": "Human readable summary of the signal's core hypothesis"
     },
     "validation_goal": {
-      "type": "string",
-      "description": "What QuantLab should prove or disprove"
+      "type": "string"
     },
-    "invalidation_signal": {
-      "type": "string",
-      "description": "Market signal that would invalidate this intent"
+    "invalidation_condition": {
+      "type": "string"
     },
     "route": {
       "type": "string",
@@ -68,12 +79,13 @@
         "research_hypothesis",
         "risk_filter",
         "product_priority"
-      ],
-      "description": "Downstream processing path in QuantLab"
+      ]
     },
     "risk_filter_hint": {
-      "type": "string",
-      "description": "Optional hints for risk engine (e.g. 'venue gating')"
+      "type": "string"
+    },
+    "product_priority_hint": {
+      "type": "string"
     },
     "score": {
       "type": "number",
@@ -89,10 +101,14 @@
       "type": "string",
       "format": "date-time"
     },
-    "metadata": {
-      "type": "object",
-      "additionalProperties": true
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "source_ref": {
+      "type": "array",
+      "items": { "type": "string" }
     }
   },
-  "additionalProperties": false
+  "additionalProperties": true
 }

@@ -5,46 +5,46 @@
 templates:
   macro_liquidity:
     hypothesis_type: ["trend", "mean_reversion"]
-    bias_direction: ["bullish", "bearish", "regime-risk"]
+    bias: ["bullish", "bearish", "regime-risk"]
     affected_universe: ["BTC", "ETH", "QQQ"]
-    time_horizon: "days_to_weeks"
+    horizon: "days to weeks"
     validation_goal: "¿Repricing macro diverge de crypto?"
-    invalidation_signal: "Crypto decouples; macro no impacta"
+    invalidation_condition: "Crypto decouples; macro no impacta"
     route: "research_hypothesis"
 
   btc_on_chain_whale:
     hypothesis_type: ["event_driven"]
-    bias_direction: ["bullish", "bearish"]
+    bias: ["bullish", "bearish"]
     affected_universe: ["BTC"]
-    time_horizon: "hours_to_days"
+    horizon: "hours to days"
     validation_goal: "¿Whale activity predice volatilidad?"
-    invalidation_signal: "No hay movimientos de precio después de 6h"
+    invalidation_condition: "No hay movimientos de precio después de 6h"
     route: "research_hypothesis"
 
   eth_regulatory_risk:
     hypothesis_type: ["regime-risk"]
-    bias_direction: ["bearish", "regime-risk"]
+    bias: ["bearish", "regime-risk"]
     affected_universe: ["ETH"]
-    time_horizon: "weeks"
+    horizon: "weeks"
     validation_goal: "¿Regulación afecta liquidez en venues?"
     risk_filter_hint: "venue gating + margin adjustment"
-    invalidation_signal: "Regulador se atrasa o dilata"
+    invalidation_condition: "Regulador se atrasa o dilata"
     route: "risk_filter"
 
   web3_market_structure:
     hypothesis_type: ["trend"]
-    bias_direction: ["bullish", "bearish"]
+    bias: ["bullish", "bearish"]
     affected_universe: ["ALT_L1", "DEFI"]
-    time_horizon: "days_to_weeks"
+    horizon: "days to weeks"
     validation_goal: "¿Cambio en estructura de mercado favorece rotación?"
-    invalidation_signal: "Volumen se mantiene en BTC/ETH únicamente"
+    invalidation_condition: "Volumen se mantiene en BTC/ETH únicamente"
     route: "research_hypothesis"
 
   execution_venue_risk:
     hypothesis_type: ["risk_filter"]
-    bias_direction: ["bearish"]
+    bias: ["bearish"]
     affected_universe: ["EXCHANGES", "CUSTODIANS"]
-    time_horizon: "immediate"
+    horizon: "immediate"
     validation_goal: "¿Riesgo de contrapartida requiere reducción de exposición?"
-    invalidation_signal: "Venue normaliza operaciones o comunicación"
+    invalidation_condition: "Venue normaliza operaciones o comunicación"
     route: "risk_filter"
