@@ -32,7 +32,7 @@ describe("Candidate Governance CLI Integration", () => {
 
   it("should fail and report drift error when state doesn't match metrics", () => {
     const driftFile = path.join(rootDir, "automation", "candidates", "drift_test.json");
-    
+
     // Low score signal (35) marked as 'candidate' (needs 40)
     const driftData = {
       id: "drift_test_001",
@@ -72,7 +72,7 @@ describe("Candidate Governance CLI Integration", () => {
 
   it("should fail when schema is invalid", () => {
     const invalidFile = path.join(rootDir, "automation", "candidates", "schema_error_test.json");
-    
+
     // Missing required field 'created_at'
     const invalidData = {
       id: "schema_error_001",
