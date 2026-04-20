@@ -13,6 +13,7 @@
     "preview": "vite preview",
     "serve:api": "node scripts/live-feed-server.mjs",
     "snapshot:edition": "node scripts/snapshot-edition.mjs",
+    "generate:intents": "node scripts/generate-intents.mjs",
     "test": "vitest run",
     "test:watch": "vitest",
     "test:e2e": "playwright test",
