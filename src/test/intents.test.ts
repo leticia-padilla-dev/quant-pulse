@@ -65,6 +65,7 @@ describe("Intent Emission CLI Integration", () => {
     expect(intent.hypothesis_type).toBe("event_driven");
     expect(intent.bias).toBe("bullish");
     expect(intent.route).toBe("research_hypothesis");
+    expect(intent.created_at).toBeDefined();
   });
 
   it("should skip candidates that are not in ready_for_review state", () => {

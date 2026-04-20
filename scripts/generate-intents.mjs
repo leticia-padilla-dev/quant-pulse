@@ -131,7 +131,7 @@ async function main() {
         route: template.route || "research_hypothesis",
         score: candidate.score,
         confidence: candidate.confidence,
-        timestamp: new Date().toISOString()
+        created_at: new Date().toISOString()
       };
 
       if (template.risk_filter_hint) {
