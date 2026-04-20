@@ -1,85 +1,26 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://whiteks1.github.io/quant-pulse/schemas/research-intent.schema.json",
+  "$id": "https://quantpulse.local/schema/research-intent.json",
   "title": "Quant Pulse Research Intent",
-  "description": "Canonical machine-facing intent emitted by Quant Pulse for QuantLab intake.",
+  "description": "Structured research hypothesis or risk filter emitted to QuantLab based on validated signal candidates.",
   "type": "object",
-  "additionalProperties": false,
   "required": [
-    "schema_version",
-    "intent_id",
-    "edition_id",
-    "created_at",
-    "signal_summary",
-    "priority",
-    "affected_universe",
-    "bias",
-    "horizon",
+    "candidate_id",
     "hypothesis_type",
+    "bias_direction",
+    "affected_universe",
+    "time_horizon",
     "validation_goal",
-    "invalidation_condition",
-    "risk_filter_hint",
-    "product_priority_hint",
-    "route"
+    "invalidation_signal",
+    "route",
+    "score",
+    "confidence",
+    "timestamp"
   ],
   "properties": {
-    "schema_version": {
+    "candidate_id": {
       "type": "string",
-      "const": "1.0",
-      "description": "Stable schema version for the research-intent payload."
-    },
-    "intent_id": {
-      "type": "string",
-      "minLength": 1,
-      "description": "Unique identifier for the intent."
-    },
-    "edition_id": {
-      "type": "string",
-      "minLength": 1,
-      "description": "Quant Pulse edition or snapshot identifier that produced the intent."
-    },
-    "created_at": {
-      "type": "string",
-      "format": "date-time",
-      "description": "UTC timestamp when the intent was generated."
-    },
-    "source_ref": {
-      "type": "array",
-      "items": {
-        "type": "string",
-        "minLength": 1
-      },
-      "default": [],
-      "description": "Optional provenance references such as story IDs, URLs, or edition-local anchors."
-    },
-    "signal_summary": {
-      "type": "string",
-      "minLength": 1,
-      "description": "Short human-readable summary of the signal."
-    },
-    "priority": {
-      "type": "string",
-      "enum": ["P1", "P2", "P3"],
-      "description": "Editorial and operational priority."
-    },
-    "affected_universe": {
-      "type": "array",
-      "minItems": 1,
-      "items": {
-        "type": "string",
-        "minLength": 1
-      },
-      "description": "Assets, venues, sectors, rails, or systems affected by the signal."
-    },
-    "bias": {
-      "type": "string",
-      "enum": ["bullish", "bearish", "neutral", "regime-risk"],
-      "description": "Tentative directional bias to validate downstream."
-    },
-    "horizon": {
-      "type": "string",
-      "minLength": 1,
-      "description": "Relevant time window for research or monitoring."
+      "description": "ID of the source candidate in automation/candidates/"
     },
     "hypothesis_type": {
       "type": "string",
@@ -88,39 +29,70 @@
         "mean_reversion",
         "event_driven",
         "risk_filter",
+        "regime-risk",
         "rotation",
         "product_priority"
-      ],
-      "description": "Downstream family QuantLab should consider."
+      ]
+    },
+    "bias_direction": {
+      "type": "string",
+      "enum": [
+        "bullish",
+        "bearish",
+        "neutral",
+        "regime-risk"
+      ]
+    },
+    "affected_universe": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "List of assets, sectors, or venues affected (e.g. ['BTC', 'ETH', 'EXCHANGES'])"
+    },
+    "time_horizon": {
+      "type": "string",
+      "description": "Expected duration of the hypothesis (e.g. 'hours', 'days_to_weeks')"
     },
     "validation_goal": {
       "type": "string",
-      "minLength": 1,
-      "description": "What evidence QuantLab should look for to validate the intent."
+      "description": "What QuantLab should prove or disprove"
     },
-    "invalidation_condition": {
+    "invalidation_signal": {
       "type": "string",
-      "minLength": 1,
-      "description": "Observable condition that invalidates the intent."
-    },
-    "risk_filter_hint": {
-      "type": "string",
-      "minLength": 1,
-      "description": "Hint for risk filters, exclusions, venue gating, or exposure control."
-    },
-    "product_priority_hint": {
-      "type": "string",
-      "minLength": 1,
-      "description": "Hint for instrumentation, coverage, or product backlog priority."
+      "description": "Market signal that would invalidate this intent"
     },
     "route": {
       "type": "string",
-      "enum": ["research_hypothesis", "risk_filter", "product_priority"],
-      "description": "How QuantLab should route the intent after intake."
+      "enum": [
+        "research_hypothesis",
+        "risk_filter",
+        "product_priority"
+      ],
+      "description": "Downstream processing path in QuantLab"
     },
-    "notes": {
+    "risk_filter_hint": {
       "type": "string",
-      "description": "Optional free-form notes for the editor or consumer."
+      "description": "Optional hints for risk engine (e.g. 'venue gating')"
+    },
+    "score": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 100
+    },
+    "confidence": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "metadata": {
+      "type": "object",
+      "additionalProperties": true
     }
-  }
+  },
+  "additionalProperties": false
 }

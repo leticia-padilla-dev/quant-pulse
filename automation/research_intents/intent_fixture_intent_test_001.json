@@ -1,0 +1,17 @@
+{
+  "candidate_id": "fixture_intent_test_001",
+  "hypothesis_type": "risk_filter",
+  "bias_direction": "bearish",
+  "affected_universe": [
+    "EXCHANGES",
+    "CUSTODIANS"
+  ],
+  "time_horizon": "immediate",
+  "validation_goal": "¿Riesgo de contrapartida requiere reducción de exposición?",
+  "invalidation_signal": "Venue normaliza operaciones o comunicación",
+  "route": "risk_filter",
+  "score": 82,
+  "confidence": 0.88,
+  "timestamp": "2026-04-20T10:53:09.617Z",
+  "risk_filter_hint": "venue gating + margin adjustment"
+}
