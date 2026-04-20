@@ -1,0 +1,36 @@
+{
+  "id": "2026-04-10_high_confidence_example",
+  "state": "ready_for_review",
+  "source": "chain_community_call",
+  "title": "Ethereum Core Devs Confirm Pectra Upgrade Activation on Mainnet",
+  "summary": "Ethereum Foundation core developers confirmed in the weekly All Core Devs call that the Pectra upgrade will activate on mainnet on schedule. Material impact on validator economics, staking yields, and protocol roadmap confidence.",
+  "category": "Web3_Structure",
+  "score": 78,
+  "confidence": 0.85,
+  "created_at": "2026-04-10T14:00:00Z",
+  "decision": {
+    "gate_applied": "ready_for_review",
+    "timestamp": "2026-04-10T14:20:00Z",
+    "reason": "High confidence signal approved: confidence=0.85 (>=0.75), score=78 (>=70), source=chain_community_call (tier_1, verified official). Category=Web3_Structure (material to QuantLab). May proceed directly to intent production or be expedited by QuantLab review.",
+    "evaluator": "human_editorial"
+  },
+  "state_transitions": [
+    {
+      "from": "no_candidate",
+      "to": "ready_for_review",
+      "timestamp": "2026-04-10T14:20:00Z",
+      "reason": "Ready_for_review gate accepted: high confidence + tier_1 source + P1-level score."
+    }
+  ],
+  "metadata": {
+    "detected_at": "2026-04-10T14:00:00Z",
+    "parent_signal_id": null,
+    "related_signals": [],
+    "links": [
+      "https://github.com/ethereum/pm/issues/pectra-mainnet",
+      "https://ethereum.org/en/roadmap/pectra"
+    ],
+    "protocol_impact": "High — affects validator economics, staking yield, protocol confidence timeline.",
+    "notes": "Fixture: ready_for_review outcome. score>=70 AND confidence>=0.75 AND tier_1 source → ready_for_review."
+  }
+}

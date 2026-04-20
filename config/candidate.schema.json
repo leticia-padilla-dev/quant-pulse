@@ -73,6 +73,11 @@
       "maximum": 1,
       "description": "System confidence in score (0-1). Gates: min=0.50, ready_for_review≥0.75"
     },
+    "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 UTC timestamp of when this candidate was created"
+    },
     "decision": {
       "type": "object",
       "required": ["gate_applied", "timestamp", "reason"],

@@ -270,9 +270,12 @@ automation/
 │   ├── index.json                     ← Registry of all candidates
 │   ├── candidate_*.json               ← Individual candidate records
 │   ├── examples/                      ← Sample fixtures (3 gate outcomes)
-│   │   ├── example_no_candidate.json
+│   │   ├── example_no_candidate.json  ← Legacy fixtures
 │   │   ├── example_candidate.json
-│   │   └── example_ready_for_review.json
+│   │   ├── example_ready_for_review.json
+│   │   ├── 2026-04-10_low_confidence_example.json        ← [NEW] Slice 1 fixtures
+│   │   ├── 2026-04-10_moderate_confidence_example.json  ← [NEW]
+│   │   └── 2026-04-10_high_confidence_example.json      ← [NEW]
 │   └── [...]
 ├── archive/
 │   ├── audit_trail.json               ← Permanent decision log
@@ -286,17 +289,21 @@ automation/
 
 ---
 
-## Next Steps (Slice 1 Remaining)
+- [x] **Task 1.2**: Implement `scripts/validate-candidates.mjs` (gate logic + validation)
+- [x] **Task 1.4**: Create `.github/pull_request_template_candidate.md`
+- [x] **Task 1.3**: Create 3 example fixtures demonstrating all gate outcomes
+- [x] **Task 1.5**: Update `AGENTS.md` + `docs/governance-lifecycle.es.md`
 
-- **Task 1.2**: Implement `scripts/validate-candidates.mjs` (gate logic + validation)
-- **Task 1.4**: Create `.github/pull_request_template_candidate.md`
-- **Task 1.3**: Create 3 example fixtures demonstrating all gate outcomes
-- **Task 1.5**: Update `AGENTS.md` + `docs/governance-lifecycle.es.md`
+## Next Steps (Slice 2 — Intent Emission)
+
+- **Task 2.1**: Implement research intent generator for high-confidence candidates
+- **Task 2.2**: Integrate `validate-candidates.mjs` into central CI workflow
 
 ---
 
 ## References
 
+- [Governance Lifecycle](../docs/governance-lifecycle.es.md)
 - [Priority Rules](../docs/priority-rules.es.md)
 - [Category Taxonomy](../docs/category-taxonomy.es.md)
 - [Canonical JSON Format](../docs/canonical-json-format.es.md)
