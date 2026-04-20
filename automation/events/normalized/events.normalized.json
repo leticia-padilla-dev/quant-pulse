@@ -1,0 +1,20 @@
+[
+  {
+    "id": "d8f2001a8c29",
+    "title": "Proposed Rule Change: Digital Asset Regulatory Framework",
+    "source": "SEC",
+    "source_tier": 1,
+    "published_at": "2024-04-15T09:00:00Z",
+    "url": "https://www.sec.gov/rules/proposed/2024/da-framework.pdf",
+    "raw_type": "manual_injection"
+  },
+  {
+    "id": "26e4507f3fc6",
+    "title": "SEC likely to delay decision on spot ETH ETFs",
+    "source": "The Block",
+    "source_tier": 1,
+    "published_at": "2024-04-15T14:30:00Z",
+    "url": "https://www.theblock.co/post/285555/sec-delay-eth-etf",
+    "raw_type": "rss"
+  }
+]

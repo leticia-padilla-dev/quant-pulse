@@ -1,0 +1,58 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://quantpulse.local/schema/event.json",
+  "title": "Quant Pulse Normalized Event",
+  "description": "Baseline normalized contract for events detected from external sources before candidate promotion.",
+  "type": "object",
+  "required": [
+    "id",
+    "title",
+    "source",
+    "source_tier",
+    "published_at",
+    "url",
+    "raw_type"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Deterministic unique identifier (hex hash of source+url+publishedAt)"
+    },
+    "title": {
+      "type": "string"
+    },
+    "source": {
+      "type": "string",
+      "description": "Matched source identifier from approved-sources.yaml"
+    },
+    "source_tier": {
+      "type": "integer",
+      "enum": [1, 2, 3],
+      "description": "Source reliability tier (1=Primary, 2=Secondary, 3=Tertiary)"
+    },
+    "published_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Original publication timestamp"
+    },
+    "url": {
+      "type": "string",
+      "format": "uri"
+    },
+    "topic": {
+      "type": "string",
+      "description": "Optional category or raw topic label"
+    },
+    "raw_type": {
+      "type": "string",
+      "enum": ["rss", "api", "scrap", "manual_injection"],
+      "description": "Source ingestion channel"
+    },
+    "metadata": {
+      "type": "object",
+      "additionalProperties": true,
+      "description": "Optional raw metadata from original source"
+    }
+  },
+  "additionalProperties": false
+}
