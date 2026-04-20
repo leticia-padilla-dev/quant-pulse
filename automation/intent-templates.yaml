@@ -11,7 +11,7 @@ templates:
     validation_goal: "¿Repricing macro diverge de crypto?"
     invalidation_signal: "Crypto decouples; macro no impacta"
     route: "research_hypothesis"
-    
+
   btc_on_chain_whale:
     hypothesis_type: ["event_driven"]
     bias_direction: ["bullish", "bearish"]
@@ -20,7 +20,7 @@ templates:
     validation_goal: "¿Whale activity predice volatilidad?"
     invalidation_signal: "No hay movimientos de precio después de 6h"
     route: "research_hypothesis"
-    
+
   eth_regulatory_risk:
     hypothesis_type: ["regime-risk"]
     bias_direction: ["bearish", "regime-risk"]

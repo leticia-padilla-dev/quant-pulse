@@ -40,7 +40,7 @@ function loadTemplates(filePath) {
     if (!trimmed || trimmed.startsWith("#")) continue;
 
     const indent = line.search(/\S/);
-    
+
     if (trimmed.endsWith(":") && indent === 2) {
       // Template key (e.g., "  macro_liquidity:")
       currentTemplate = trimmed.slice(0, -1);
@@ -51,7 +51,7 @@ function loadTemplates(filePath) {
       if (firstColon !== -1) {
         const k = trimmed.slice(0, firstColon).trim();
         const v = trimmed.slice(firstColon + 1).trim();
-        
+
         if (v.startsWith("[") && v.endsWith("]")) {
           templates[currentTemplate][k] = v.slice(1, -1).split(",").map(i => i.trim().replace(/"/g, ""));
         } else {
@@ -90,7 +90,7 @@ async function main() {
 
   // Discover candidates
   const files = fs.readdirSync(candidatesDir).filter(f => f.endsWith(".json") && f !== "index.json");
-  
+
   let generatedCount = 0;
   let skippedCount = 0;
 

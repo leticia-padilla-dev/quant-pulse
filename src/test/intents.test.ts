@@ -16,7 +16,7 @@ describe("Intent Emission CLI Integration", () => {
   beforeEach(() => {
     // Remove fixture to isolate test
     if (fs.existsSync(fixturePath)) fs.renameSync(fixturePath, fixturePath + ".bak");
-    
+
     // Setup a ready_for_review candidate
     const candidate = {
       id: "test_intent_gen",
