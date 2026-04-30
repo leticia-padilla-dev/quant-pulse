@@ -24,7 +24,9 @@ if (!fs.existsSync(outputDir)) {
  * Simple YAML parser for approved sources (primitive but sufficient for Phase 3 baseline)
  */
 function loadApprovedSources(filePath) {
-  if (!fs.existsSync(filePath)) return { tiers: {} };
+  if (!fs.existsSync(filePath)) {
+    return { tier_1: [], tier_2: [], tier_3: [] };
+  }
   const content = fs.readFileSync(filePath, "utf8");
   const sources = { tier_1: [], tier_2: [], tier_3: [] };
   let currentTier = null;
