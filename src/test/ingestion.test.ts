@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeEach } from "vitest";
+import { afterEach, describe, it, expect } from "vitest";
 import { spawnSync } from "node:child_process";
 import path from "node:path";
 import fs from "node:fs";
@@ -7,8 +7,10 @@ import addFormats from "ajv-formats";
 
 const rootDir = process.cwd();
 const scriptPath = path.join(rootDir, "scripts", "ingest-events.mjs");
+const fixturesDir = path.join(rootDir, "automation", "events", "fixtures");
 const outputPath = path.join(rootDir, "automation", "events", "normalized", "events.normalized.json");
 const schemaPath = path.join(rootDir, "config", "event.schema.json");
+const tempFixturePath = path.join(fixturesDir, "__tmp_explicit_match_only.json");
 
 const ajv = new Ajv({ allErrors: true, strict: false });
 addFormats(ajv);
@@ -16,6 +18,12 @@ addFormats(ajv);
 describe("Event Ingestion Foundation", () => {
   const schema = JSON.parse(fs.readFileSync(schemaPath, "utf8"));
   const validate = ajv.compile(schema);
+
+  afterEach(() => {
+    if (fs.existsSync(tempFixturePath)) {
+      fs.unlinkSync(tempFixturePath);
+    }
+  });
 
   it("should generate a single canonical normalized artifact from fixtures", () => {
     const result = spawnSync("node", [scriptPath], {
@@ -87,5 +95,27 @@ describe("Event Ingestion Foundation", () => {
     expect(theBlock.source_tier).toBe(1);
     expect(sec).toBeDefined();
     expect(sec.source_tier).toBe(1);
+  });
+
+  it("should enforce explicit source matches only", () => {
+    const tempFixture = [
+      {
+        feed_source: "The Block Research",
+        item_title: "Non-canonical branded source variant",
+        item_link: "https://example.com/the-block-research",
+        pub_date: "2024-04-15T16:00:00Z",
+        channel: "rss"
+      }
+    ];
+
+    fs.writeFileSync(tempFixturePath, JSON.stringify(tempFixture, null, 2));
+    spawnSync("node", [scriptPath], { cwd: rootDir });
+
+    const events = JSON.parse(fs.readFileSync(outputPath, "utf8"));
+    const variant = events.find((event) => event.url === "https://example.com/the-block-research");
+
+    expect(variant).toBeDefined();
+    expect(variant.source).toBe("The Block Research");
+    expect(variant.source_tier).toBe(3);
   });
 });

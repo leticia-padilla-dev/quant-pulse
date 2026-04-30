@@ -28,14 +28,25 @@ function loadApprovedSources(filePath) {
   const content = fs.readFileSync(filePath, "utf8");
   const sources = { tier_1: [], tier_2: [], tier_3: [] };
   let currentTier = null;
+  let inExplicitSources = false;
 
   const lines = content.split("\n");
   for (const line of lines) {
     const trimmed = line.trim();
-    if (trimmed.startsWith("tier_1:")) currentTier = "tier_1";
-    else if (trimmed.startsWith("tier_2:")) currentTier = "tier_2";
-    else if (trimmed.startsWith("tier_3:")) currentTier = "tier_3";
-    else if (trimmed.startsWith("- ") && currentTier) {
+    if (trimmed.startsWith("tier_1:")) {
+      currentTier = "tier_1";
+      inExplicitSources = false;
+    } else if (trimmed.startsWith("tier_2:")) {
+      currentTier = "tier_2";
+      inExplicitSources = false;
+    } else if (trimmed.startsWith("tier_3:")) {
+      currentTier = "tier_3";
+      inExplicitSources = false;
+    } else if (trimmed.startsWith("explicit_sources:")) {
+      inExplicitSources = true;
+    } else if (/^[a-zA-Z_]+:/.test(trimmed)) {
+      inExplicitSources = false;
+    } else if (trimmed.startsWith("- ") && currentTier && inExplicitSources) {
       sources[currentTier].push(trimmed.replace("- ", "").replace(/"/g, "").trim());
     }
   }
@@ -55,14 +66,13 @@ function generateDeterministicId(source, url, publishedAt) {
  */
 function mapSource(rawName, approvedSources) {
   for (const tier of ["tier_1", "tier_2", "tier_3"]) {
-    const matched = approvedSources[tier].find(s => 
-      s.toLowerCase() === rawName.toLowerCase() || 
-      rawName.toLowerCase().includes(s.toLowerCase())
+    const matched = approvedSources[tier].find((sourceName) =>
+      sourceName.toLowerCase() === rawName.toLowerCase()
     );
     if (matched) {
-      return { 
-        source: matched, 
-        tier: parseInt(tier.split("_")[1]) 
+      return {
+        source: matched,
+        tier: parseInt(tier.split("_")[1], 10)
       };
     }
   }
@@ -80,12 +90,12 @@ function main() {
     console.warn("No fixtures directory found. Skipping.");
     return;
   }
-  
+
   const fixtureFiles = fs.readdirSync(fixturesDir).filter(f => f.endsWith(".json"));
 
   for (const file of fixtureFiles) {
     const rawData = JSON.parse(fs.readFileSync(path.join(fixturesDir, file), "utf8"));
-    
+
     // Support single objects or arrays
     const items = Array.isArray(rawData) ? rawData : [rawData];
 
