@@ -22,6 +22,7 @@ describe("Event Ingestion Foundation", () => {
   afterEach(() => {
     if (fs.existsSync(tempFixturePath)) {
       fs.unlinkSync(tempFixturePath);
+      spawnSync("node", [scriptPath], { cwd: rootDir });
     }
   });
 
